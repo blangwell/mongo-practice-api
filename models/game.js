@@ -11,7 +11,11 @@ let gameSchema = new mongoose.Schema({
     minlength: 1,
     maxlength: 10
   },
-  year: Number
+  year: Number,
+  studio: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Studio'
+  }
 
 })
 
