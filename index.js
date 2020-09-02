@@ -1,5 +1,9 @@
 const express = require('express');
 const app = express();
+require('dotenv');
+
+const port = process.env.PORT || 3000;
+const hostname = process.env.HOST || 'localhost';
 
 // QUESTION : this middleware allows us to accept 
 // traditional form data as well as json ?
@@ -12,6 +16,6 @@ app.get('/', (req, res) => {
   res.send('Home route, homeboy')
 })
 
-app.listen(3000, () => {
-  console.log('List\'nin\' to Port 3000')
+app.listen(port, hostname, () => {
+  console.log(`List\'nin\' to Port ${port}`)
 })
