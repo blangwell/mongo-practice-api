@@ -1,10 +1,6 @@
 const router = require('express').Router();
 const db = require('../models');
 
-let statusCode = (status, message) => {
-  res.status(status).send({message: message})
-}
-
 router.get('/', (req, res) => {
   db.Game.find()
   .then(games => {
