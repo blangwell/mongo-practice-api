@@ -6,7 +6,7 @@ let statusCode = (status, message) => {
 }
 
 router.get('/', (req, res) => {
-  res.send('You at GET /games')
+  // res.send('You at GET /games')
   db.Game.find()
   .then(games => {
     console.log(games)
@@ -36,7 +36,7 @@ router.post('/', (req, res) => {
   db.Game.create(req.body)
   .then(game => {
     console.log(game)
-    res.status(201).send(createdBounty)
+    res.status(201).send(game)
   })
   .catch(err => {
     console.log('ERROR CREATING ', err)

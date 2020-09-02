@@ -1,5 +1,13 @@
 const mongoose = require('mongoose');
 
+let studioSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  location: String
+})
+
 let gameSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -12,10 +20,7 @@ let gameSchema = new mongoose.Schema({
     maxlength: 10
   },
   year: Number,
-  studio: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Studio'
-  }
+  studio: [studioSchema]
 
 })
 
