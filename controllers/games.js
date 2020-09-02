@@ -6,7 +6,6 @@ let statusCode = (status, message) => {
 }
 
 router.get('/', (req, res) => {
-  // res.send('You at GET /games')
   db.Game.find()
   .then(games => {
     console.log(games)
@@ -43,11 +42,24 @@ router.post('/', (req, res) => {
     err.name === 'Validation Error' ? statusCode(406, 'validation error')
     : statusCode(503, 'DB or server error')
   })
-  // res.send(`You at the POST route. You must be lost`)
 })
 
 router.put('/:id', (req, res) => {
-  res.send(`Back up in that PUT route with the resurrection`)
+  db.Game.findOneAndUpdate({
+    _id: req.params.id
+  },
+  req.body,
+  {
+    new: true
+  })
+  .then(game => {
+    console.log(game)
+    res.send(game)
+  })
+  .catch(err => {
+    console.log(err)
+    statusCode(503, 'Server error')
+  })
 })
 
 router.delete('/:id', (req, res) => {

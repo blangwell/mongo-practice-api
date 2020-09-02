@@ -21,7 +21,6 @@ let gameSchema = new mongoose.Schema({
   },
   year: Number,
   studio: [studioSchema]
-
 })
 
 module.exports = mongoose.model('Game', gameSchema);
