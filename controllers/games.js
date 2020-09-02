@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
   })
   .catch(err => {
     console.log(err)
-    statusCode(503, 'Database SLEEP 😴')
+    res.status(503).send({message: 'Database sleep'}) // 503 service unavailable 
   })
 })
 
@@ -22,11 +22,12 @@ router.get('/:id', (req, res) => {
     _id: req.params.id
   })
   .then(game => {
-    game ? res.send(game) : statusCode(404, 'resource not located')
+    game ? res.send(game) 
+    : res.status(404).send({message: 'Resource not located'})
   })
   .catch(err => {
     console.log(err)
-    statusCode(503, 'service unavailable ☹️')
+    res.status(503).send({message: 'Service Unavailable'})
   })
   // res.send(`You at the GET show route! url params: ${req.params.id}`)
 })
@@ -39,8 +40,9 @@ router.post('/', (req, res) => {
   })
   .catch(err => {
     console.log('ERROR CREATING ', err)
-    err.name === 'Validation Error' ? statusCode(406, 'validation error')
-    : statusCode(503, 'DB or server error')
+    err.name === 'Validation Error' 
+    ? res.status(406).send({message: 'Validation Error'})
+    : res.status(503).send({message: 'Database or server error'})
   })
 })
 
@@ -58,12 +60,15 @@ router.put('/:id', (req, res) => {
   })
   .catch(err => {
     console.log(err)
-    statusCode(503, 'Server error')
+    res.status(503).send({message: 'Server Error'})
   })
 })
 
 router.delete('/:id', (req, res) => {
-  res.send(`DELETE route 🔫`)
+  db.Game.findByIdAndDelete(req.params.id)
+  .then(() => res.status(204).send({message: 'Deleted it'})
+  )
+  .catch(err => res.status(503).send({message: 'Server Error'}))
 })
 
 module.exports = router;
